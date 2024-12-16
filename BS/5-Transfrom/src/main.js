@@ -35,7 +35,26 @@ mesh.scale.set(2.5, 0.5, 1.5)
 
 
 
-scene.add(mesh)
+// scene.add(mesh)
+
+
+const group = new THREE.Group()
+// group.add(mesh)
+
+const cube1 = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshBasicMaterial({color: 'red'}))
+const cube2 = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshBasicMaterial({color: 'blue'}))
+const cube3 = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshBasicMaterial({color: 'green'}))
+
+group.add(cube1, cube2, cube3)
+cube1.position.set(-1, -1, 0)
+cube3.position.set(-1, 2, 0)
+cube2.position.set(1, -1, 1)
+
+
+group.rotation.y = Math.PI / 4
+scene.add(group)
+
+
 
 // console.log(mesh.position.length())
 // .length() is used to get the length of the vector , it is the distance between  the center of the scene and the object 
@@ -58,10 +77,10 @@ scene.add(axxesHelper)
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
 // console.log(mesh.position.distanceTo(camera.position))
 
-camera.lookAt(mesh.position)
 
 
-camera.position.z = 3
+
+camera.position.z = 4
 const renderer = new THREE.WebGLRenderer({canvas: document.querySelector('#canvas')})
 
 renderer.setSize(window.innerWidth, window.innerHeight)
