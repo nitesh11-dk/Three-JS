@@ -27,8 +27,12 @@ mesh.scale.set(2.5, 0.5, 1.5)
 
 // mesh.rotation.x = Math.PI 
 // mesh.rotation.reorder('YXZ') // changing the axes order  
-mesh.rotation.y = Math.PI /2
-mesh.rotation.x = Math.PI /2
+// mesh.rotation.y = Math.PI /2
+// mesh.rotation.x = Math.PI /2
+
+//  quaternion   information 
+
+
 
 
 scene.add(mesh)
@@ -52,7 +56,9 @@ scene.add(axxesHelper)
 
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
-console.log(mesh.position.distanceTo(camera.position))
+// console.log(mesh.position.distanceTo(camera.position))
+
+camera.lookAt(mesh.position)
 
 
 camera.position.z = 3
