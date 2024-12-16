@@ -26,7 +26,10 @@ mesh.scale.set(2.5, 0.5, 1.5)
 
 
 // mesh.rotation.x = Math.PI 
+// mesh.rotation.reorder('YXZ') // changing the axes order  
 mesh.rotation.y = Math.PI /2
+mesh.rotation.x = Math.PI /2
+
 
 scene.add(mesh)
 
