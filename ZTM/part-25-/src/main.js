@@ -8,7 +8,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const scene = new THREE.Scene();
 
 const cubeGeometry = new THREE.BoxGeometry(1,1,1);
-const cubeMaterial = new THREE.MeshBasicMaterial({color: 'red'});
+const cubeMaterial = new THREE.MeshBasicMaterial({color: 'red' ,wireframe:true});
 
 const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
@@ -21,8 +21,15 @@ const camera = new THREE.PerspectiveCamera(75 , window.innerWidth / window.inner
 
 cubeMesh.position.x = 1;
 cubeMesh.position.y = 1;
+
+cubeMesh.rotation.y = Math.PI ;
+// cubeMesh.rotation.x = Math.PI /4 ;
+cubeMesh.rotation.x = THREE.MathUtils.degToRad(45);
 const axesHelper = new THREE.AxesHelper(2);
-scene.add(axesHelper);
+const axesHelper2 = new THREE.AxesHelper(2);
+cubeMesh.add(axesHelper);
+scene.add(axesHelper2);
+
 
 // orthographic camera 
 // let aspectRatio = window.innerWidth / window.innerHeight;
@@ -46,7 +53,7 @@ renderer.setPixelRatio(maxPixelRatio);
 
 
 controls.enableDamping = true;
-controls.autoRotate = true;
+// controls.autoRotate = true;
 
 function renderloop(){
     controls.update();
@@ -64,3 +71,4 @@ window.addEventListener('resize',()=>{
 
 
 
+// console.log(window.devicePixelRatio)
