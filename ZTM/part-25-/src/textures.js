@@ -23,18 +23,42 @@ let geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial();
 
 // !  Initializing the texture 
-const texture = textureLoader.load('static/whispy-grass-meadow-bl/wispy-grass-meadow_albedo.png');
+// const grassTexture = textureLoader.load('/1.png');
+const grassTexture = textureLoader.load('/2.png');
+// grassTexture.repeat.set(100,100); // repeat the texture
+grassTexture.repeat.set(2,2); // repeat the texture
+grassTexture.wrapS = THREE.RepeatWrapping; // repeat the texture in x direction
+grassTexture.wrapT = THREE.RepeatWrapping; // repeat the texture in y direction
+// grassTexture.wrapS = THREE.MirroredRepeatWrapping; 
+// grassTexture.wrapT = THREE.MirroredRepeatWrapping; 
 
-material.map = texture;
+grassTexture.offset.x =0.5
 
+const pane = new Pane()
+
+const texturePane = pane.addBinding(grassTexture, 'offset',{
+  x:{
+    min:-1,
+    max:1,
+    step:0.01,
+  },
+  y:{
+    min:-1,
+    max:1,
+    step:0.01,
+  }
+});
+
+material.map = grassTexture;
+// material.color = new  THREE.Color('red')
 
 
 
 const cube = new THREE.Mesh( geometry, material ); 
 const cube2 = new THREE.Mesh( geometry, material ); 
 cube2.position.x = 2;
-const plane = new THREE.Mesh( new THREE.PlaneGeometry(1,1),material );
-plane.position.x = -2;
+
+
 const torus = new THREE.Mesh( new THREE.TorusKnotGeometry(0.5,0.15,100,16),material );
 torus.position.x = 2;
 const sphere = new THREE.Mesh( new THREE.SphereGeometry(0.5,32,32),material );
@@ -47,10 +71,18 @@ cylinder.material=material;
 cylinder.position.y = 2;
 
 
+const plane = new THREE.Mesh( new THREE.PlaneGeometry(1,1),material );
+plane.position.x = -2;
+plane.rotation.x = -(Math.PI/2);
+plane.scale.set(15,15);
+
+
 //  ! creating a group
 const group = new THREE.Group();
-group.add(cylinder ,sphere,torus,plane,cube);
+// group.add(cylinder ,sphere,torus,plane,cube);
+group.add(plane);
 scene.add(group);
+
 
 
 material.side = THREE.DoubleSide;
@@ -76,19 +108,20 @@ scene.add(light);
 
 
 // Initialize the perspective camera
-const camera = new THREE.PerspectiveCamera(75 , window.innerWidth / window.innerHeight,0.1,30);
+const camera = new THREE.PerspectiveCamera(75 , window.innerWidth / window.innerHeight,0.1,10000);
 
 // Add axes helper for orientation
-const axesHelper = new THREE.AxesHelper(2);
+const axesHelper = new THREE.AxesHelper(10);
 const axesHelper2 = new THREE.AxesHelper(2);
 scene.add(axesHelper);
-pointLight.add(axesHelper2);
+// pointLight.add(axesHelper2);
 
 
 
 
 // Position the camera
 camera.position.z = 5;
+camera.position.y = 10;
 scene.add(camera);
 
 // Initialize the renderer
@@ -124,11 +157,11 @@ function renderloop(){
     //     child.rotation.x += 0.01;
     //    }
     // });   //! instead of this we can make a group 
-   group.children.forEach(child => {
-       if (child instanceof THREE.Mesh){
-        child.rotation.x += 0.01;
-       }
-    }); 
+  //  group.children.forEach(child => {
+  //      if (child instanceof THREE.Mesh){
+  //       child.rotation.x += 0.01;
+  //      }
+  //   }); 
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(renderloop);
