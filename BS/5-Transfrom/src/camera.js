@@ -64,10 +64,30 @@ controls.enableDamping = true   // ! so the camera will move smoothly , but upda
 
 // 11. Set renderer size
 renderer.setSize(window.innerWidth, window.innerHeight)
-
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // gsap.to(mesh.position, {x: 2, duration: 1,repeat: -1, yoyo: true})
 
+
+// ! full screen handler 
+window.addEventListener('dblclick', () => {
+    let fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    
+   if(!document.fullscreenElement){
+    canvas.requestFullscreen()
+   }else{
+    document.exitFullscreen()
+   }
+})
+
+// ! resize handler 
+window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+})
 
 
 function animate() {
